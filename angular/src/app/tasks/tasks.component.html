@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ul class="list-group" id="TaskList">
+            <li class="list-group-item">
+                <h2>
+                    {{l('TaskList')}}
+                    <span class="pull-right">
+                        <select name="taskState" class="form-control" [(ngModel)]="selectedState" (change)="getTasks()">
+                            <option *ngFor="let item of stateSelectOptions" [ngValue]="item.value">
+                                {{item.text}}
+                            </option>
+                        </select>
+                    </span>
+                </h2>
+            </li>
+            <li *ngFor="let item of tasks" class="list-group-item">
+                <span class="pull-right label" [ngClass]="getTaskLable(item)">{{getTaskState(item)}}</span>
+                <h4 class="list-group-item-heading">{{item.title}}</h4>
+                <div class="list-group-item-text">
+                    {{item.creationTime?.format('LLL')}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
