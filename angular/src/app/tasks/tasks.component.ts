@@ -1,14 +1,14 @@
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { TaskListDto, TaskState, TaskServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AddOrEditTaskModalComponentComponent } from '@app/tasks/add-tasks/add-or-edit-task-modal-component/add-or-edit-task-modal-component.component';
+import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent extends AppComponentBase implements OnInit {
-    @ViewChild('addOrEditTaskModal') addOrEditTaskModal: AddOrEditTaskModalComponentComponent;
+    @ViewChild('addOrEditTaskModal') addOrEditTaskModal: AddOrEditTaskModalComponent;
     tasks: TaskListDto[] = [];
     selectedState: TaskState;
     stateSelectOptions = [

@@ -34,6 +34,7 @@ import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
 import { TasksComponent } from './tasks/tasks.component';
+import { AddOrEditTaskModalComponent } from './tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { TasksComponent } from './tasks/tasks.component';
         SideBarNavComponent,
         SideBarFooterComponent,
         RightSideBarComponent,
-        TasksComponent
+        TasksComponent,
+        AddOrEditTaskModalComponent
     
     ],
     imports: [

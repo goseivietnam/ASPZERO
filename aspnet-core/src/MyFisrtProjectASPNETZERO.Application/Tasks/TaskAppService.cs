@@ -1,12 +1,12 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
-using MyFisrtProjectASPNETZERO.Tasks.Dto;
-using System.Threading.Tasks;
 using Abp.Linq.Extensions;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
+using MyFisrtProjectASPNETZERO.Tasks.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyFisrtProjectASPNETZERO.Tasks
 {
@@ -34,11 +34,12 @@ namespace MyFisrtProjectASPNETZERO.Tasks
 
         public async Task<TaskListDto> Create(CreateTaskInput input)
         {
-            var task = ObjectMapper.Map<Task>(input);
-            await _taskRepository.InsertAsync(task);
-            await CurrentUnitOfWork.SaveChangesAsync();
+                var task = ObjectMapper.Map<Task>(input);
+                task.TenantId = 2;
+                await _taskRepository.InsertAsync(task);
+                await CurrentUnitOfWork.SaveChangesAsync();
 
-            return ObjectMapper.Map<TaskListDto>(task);
+                return ObjectMapper.Map<TaskListDto>(task);
         }
     }
 }
