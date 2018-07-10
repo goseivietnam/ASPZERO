@@ -23,6 +23,7 @@
                                 <th>{{l('Title')}}</th>
                                 <th>{{l('CreationTime')}}</th>
                                 <th>{{l('Task State')}}</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,15 +32,15 @@
                                 <td>{{item.creationTime?.format('LLL')}}</td>
                                 <td>{{getTaskState(item)}}</td>
 
-                                <!--<td class="dropdown">
+                                <td class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">menu</i>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
                                         <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="editTask(item)"><i class="material-icons">create</i>{{l('Edit')}}</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="delete(item)"><i class="material-icons">delete_sweep</i>{{l('Delete')}}</a></li>
+                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="delete(item.id)"><i class="material-icons">delete_sweep</i>{{l('Delete')}}</a></li>
                                     </ul>
-                                </td>-->
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,5 +53,5 @@
     </div>
 </div>
 
-<app-add-or-edit-task-modal #addOrEditTaskModal (modalSave)="refresh()"></app-add-or-edit-task-modal>
-<app-edit-task #editTaskModal (modalSave)="refresh()"></app-edit-task>
+<app-add-or-edit-task-modal #addOrEditTaskModal (modalSave)="getTasks()"></app-add-or-edit-task-modal>
+<app-edit-task #editTaskModal (modalSave)="getTasks()"></app-edit-task>

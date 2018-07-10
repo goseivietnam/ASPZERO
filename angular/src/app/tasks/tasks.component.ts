@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, Output, EventEmitter } from '@angular/core';
 import { TaskListDto, TaskState, TaskServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
@@ -11,6 +11,7 @@ import { EditTaskComponent } from '@app/tasks/edit-task/edit-task.component';
 export class TasksComponent extends AppComponentBase implements OnInit {
     @ViewChild('addOrEditTaskModal') addOrEditTaskModal: AddOrEditTaskModalComponent;
     @ViewChild('editTaskModal') editTaskModal: EditTaskComponent;
+    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     tasks: TaskListDto[] = [];
     selectedState: TaskState;
     stateSelectOptions = [
@@ -37,9 +38,9 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     getTaskState(task: TaskListDto) {
         switch (task.state) {
             case TaskState1.Open:
-                return this.l('TaskState_Open');
+                return this.l('Open');
             case TaskState1.Completed:
-                return this.l('TaskState_Completed');
+                return this.l('Completed');
             default:
                 return '';
         }
@@ -54,6 +55,21 @@ export class TasksComponent extends AppComponentBase implements OnInit {
 
     editTask(task: TaskListDto): void {
         this.editTaskModal.show(task);
+    }
+    protected delete(id: number): void {
+        abp.message.confirm(
+            "You want to delete this Task?",
+            (result: boolean) => {
+                if (result) {
+                    this.taskService.delete(id)
+                        .subscribe(() => {
+                            abp.notify.info("Deleted Success!");
+                            this.modalSave.emit(this.tasks);
+                            location.reload();
+                        });
+                }
+            }
+        );
     }
 }
 export class TaskState1 {

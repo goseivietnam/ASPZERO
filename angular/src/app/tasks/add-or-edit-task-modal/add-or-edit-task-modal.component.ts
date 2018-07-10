@@ -45,9 +45,10 @@ export class AddOrEditTaskModalComponent extends AppComponentBase {
         this.taskService.create(this.task)
             .finally(() => { this.saving = false; })
             .subscribe(result => {
-                this.notify.info(this.l('SavedSuccessfully'));
+                this.notify.info(this.l('Saved Successfully!'));
                 this.close();
-                this.modalSave.emit(result);
+                this.modalSave.emit(this.task);
+                //location.reload();
             }); 
     }
     onShown(): void {

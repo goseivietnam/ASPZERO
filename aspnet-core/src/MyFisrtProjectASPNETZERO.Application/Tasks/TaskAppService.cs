@@ -41,5 +41,35 @@ namespace MyFisrtProjectASPNETZERO.Tasks
 
                 return ObjectMapper.Map<TaskListDto>(task);
         }
+
+        public async Task<TaskListDto> Update(TaskListDto input)
+        {
+            try
+            {
+                var task = _taskRepository.Get(input.Id);
+                ObjectMapper.Map(input, task);
+                var result = await _taskRepository.UpdateAsync(task);
+
+                return ObjectMapper.Map<TaskListDto>(result);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+           
+        }
+        public  async void Delete(int id)
+        {
+            try
+            {
+                var task = _taskRepository.Get(id);
+                await _taskRepository.DeleteAsync(task);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            
+        }
     }
 }

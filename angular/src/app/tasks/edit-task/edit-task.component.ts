@@ -23,21 +23,29 @@ export class EditTaskComponent extends AppComponentBase {
     active = false;
     saving = false;
 
-    task: TaskListDto = null;
+    task1: TaskListDto = null;
 
-    constructor(injector: Injector, private taskService: TaskServiceProxy) {
+    constructor(injector: Injector, private _taskService: TaskServiceProxy) {
         super(injector);
     }
 
     show(task: TaskListDto): void {
         this.selectedState = task.state;
-        this.task = task;
+        this.task1 = task;
         this.active = true;
         this.editTaskModal.show();
     }
 
     save(): void {
-
+        
+        this.task1.state = this.selectedState;
+        this._taskService.update(this.task1)
+            .finally(() => { this.saving = false; })
+            .subscribe(result => {
+                this.notify.info(this.l('Update Successfully!'));
+                this.close();
+                this.modalSave.emit(result);
+            })
     }
 
     onShown(): void {
