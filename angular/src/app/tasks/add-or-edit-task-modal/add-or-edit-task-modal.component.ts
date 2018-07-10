@@ -44,7 +44,11 @@ export class AddOrEditTaskModalComponent extends AppComponentBase {
         this.saving = true;
         this.taskService.create(this.task)
             .finally(() => { this.saving = false; })
-            .subscribe(result => { this.modalSave.emit(result); this.close(); });
+            .subscribe(result => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(result);
+            }); 
     }
     onShown(): void {
         $.AdminBSB.input.activate($(this.modalContent.nativeElement));

@@ -1,13 +1,13 @@
-<div bsModal #createOrEditModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+<div bsModal #editTaskModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog">
         <div #modalContent class="modal-content">
-            <form *ngIf="active" #createTaskForm="ngForm" id="frm_create_tenant" novalidate (ngSubmit)="save()">
+            <form *ngIf="active" #editTaskForm="ngForm" id="frm_edit_task" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
                     <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title">
-                        <span>Create new Task</span>
+                        <span>Edit Task</span>
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -23,23 +23,21 @@
                             <label class="form-label">{{l("Description")}}</label>
                         </div>
                     </div>
-               
-                    <!--<div class="form-group form-float">
+                    <div class="form-group form-float">
                         <div class="">
-                            <span class="pull-left">
-                                <select name="taskState" class="form-control" [(ngModel)]="selectedState">
-                                    <option *ngFor="let item of stateSelectOptions" [ngValue]="item.value">
-                                        {{item.text}}
-                                    </option>
-                                </select>
-                            </span>
+                            <label class="form-label" style="font-size:12px;display:block;font-weight:unset;">{{l("State")}}</label>
+                            <select name="taskState" class="form-control" [(ngModel)]="selectedState">
+                                <option *ngFor="let item of stateSelectOptions" [ngValue]="item.value">
+                                    {{item.text}}
+                                </option>
+                            </select>
+
                         </div>
-                    </div>-->
-                    
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button [disabled]="!createTaskForm.form.valid || saving" type="submit" class="btn btn-primary blue">{{l("Save")}}</button>
+                    <button [disabled]="!editTaskForm.form.valid || saving" type="submit" class="btn btn-primary blue">{{l("Save")}}</button>
                 </div>
             </form>
         </div>

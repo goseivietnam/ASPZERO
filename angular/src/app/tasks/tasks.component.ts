@@ -2,6 +2,7 @@ import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { TaskListDto, TaskState, TaskServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
+import { EditTaskComponent } from '@app/tasks/edit-task/edit-task.component';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -9,6 +10,7 @@ import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/a
 })
 export class TasksComponent extends AppComponentBase implements OnInit {
     @ViewChild('addOrEditTaskModal') addOrEditTaskModal: AddOrEditTaskModalComponent;
+    @ViewChild('editTaskModal') editTaskModal: EditTaskComponent;
     tasks: TaskListDto[] = [];
     selectedState: TaskState;
     stateSelectOptions = [
@@ -48,6 +50,10 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     OnTaskUpdate(task: TaskListDto) {
         this.tasks.push(task);
         this.notify.success(this.l('SavedSuccessully'));
+    }
+
+    editTask(task: TaskListDto): void {
+        this.editTaskModal.show(task);
     }
 }
 export class TaskState1 {

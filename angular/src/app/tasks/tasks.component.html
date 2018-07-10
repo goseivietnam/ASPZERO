@@ -3,33 +3,54 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="body table-responsive">
-                <ul class="list-group" id="TaskList">
-                    <li class="list-group-item">
-                        <h2>
-                            {{l('TaskList')}}
-                            <span class="pull-right">
-                                <select name="taskState" class="form-control" [(ngModel)]="selectedState" (change)="getTasks()">
-                                    <option *ngFor="let item of stateSelectOptions" [ngValue]="item.value">
-                                        {{item.text}}
-                                    </option>
-                                </select>
-                            </span>
-                        </h2>
-                    </li>
-                    <li *ngFor="let item of tasks" class="list-group-item">
-                        <span class="pull-right label" [ngClass]="getTaskLable(item)">{{getTaskState(item)}}</span>
-                        <h4 class="list-group-item-heading">{{item.title}}</h4>
-                        <div class="list-group-item-text">
-                            {{item.creationTime?.format('LLL')}}
-                        </div>
-                    </li>
-                </ul>
-                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="ShowTaskModal()">
-                    <i class="material-icons">add</i>
-                </button>
+                <div class="header">
+                    <h2>
+                        {{l('TaskList')}}
+                        <span class="pull-right">
+                            <select name="taskState" class="form-control" [(ngModel)]="selectedState" (change)="getTasks()">
+                                <option *ngFor="let item of stateSelectOptions" [ngValue]="item.value">
+                                    {{item.text}}
+                                </option>
+                            </select>
+                        </span>
+                    </h2>
+                </div>
+
+                <div class="body table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{l('Title')}}</th>
+                                <th>{{l('CreationTime')}}</th>
+                                <th>{{l('Task State')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tasks | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
+                                <td (click)="editTask(item)" style="cursor:pointer;">{{item.title}}</td>
+                                <td>{{item.creationTime?.format('LLL')}}</td>
+                                <td>{{getTaskState(item)}}</td>
+
+                                <!--<td class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="editTask(item)"><i class="material-icons">create</i>{{l('Edit')}}</a></li>
+                                        <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="delete(item)"><i class="material-icons">delete_sweep</i>{{l('Delete')}}</a></li>
+                                    </ul>
+                                </td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="ShowTaskModal()">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <app-add-or-edit-task-modal #addOrEditTaskModal (modalSave)="refresh()"></app-add-or-edit-task-modal>
+<app-edit-task #editTaskModal (modalSave)="refresh()"></app-edit-task>
