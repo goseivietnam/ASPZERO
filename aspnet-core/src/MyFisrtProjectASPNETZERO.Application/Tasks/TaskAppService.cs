@@ -71,5 +71,11 @@ namespace MyFisrtProjectASPNETZERO.Tasks
             }
             
         }
+
+        public async Task<TaskListDto> GetAsync(int id)
+        {
+             var a = ObjectMapper.Map<TaskListDto>(_taskRepository.Get(id));
+            return await System.Threading.Tasks.Task.FromResult(a);
+        }
     }
 }

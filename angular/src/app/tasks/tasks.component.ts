@@ -54,7 +54,7 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     }
 
     editTask(task: TaskListDto): void {
-        this.editTaskModal.show(task);
+        this.editTaskModal.show(task.id);
     }
     protected delete(id: number): void {
         abp.message.confirm(
@@ -64,8 +64,7 @@ export class TasksComponent extends AppComponentBase implements OnInit {
                     this.taskService.delete(id)
                         .subscribe(() => {
                             abp.notify.info("Deleted Success!");
-                            this.modalSave.emit(this.tasks);
-                            location.reload();
+                            this.getTasks();    
                         });
                 }
             }

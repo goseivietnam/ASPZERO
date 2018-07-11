@@ -29,11 +29,13 @@ export class EditTaskComponent extends AppComponentBase {
         super(injector);
     }
 
-    show(task: TaskListDto): void {
-        this.selectedState = task.state;
-        this.task1 = task;
-        this.active = true;
-        this.editTaskModal.show();
+    show(id: number): void {
+        this._taskService.getAsync(id).subscribe((result) => {
+            this.selectedState = result.state;
+            this.task1 = result;
+            this.active = true;
+            this.editTaskModal.show();
+        });
     }
 
     save(): void {
@@ -44,7 +46,7 @@ export class EditTaskComponent extends AppComponentBase {
             .subscribe(result => {
                 this.notify.info(this.l('Update Successfully!'));
                 this.close();
-                this.modalSave.emit(result);
+                this.modalSave.emit(null);
             })
     }
 
