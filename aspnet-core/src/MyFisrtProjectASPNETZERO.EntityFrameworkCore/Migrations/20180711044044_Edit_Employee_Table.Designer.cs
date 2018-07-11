@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFisrtProjectASPNETZERO.EntityFrameworkCore;
 
 namespace MyFisrtProjectASPNETZERO.Migrations
 {
     [DbContext(typeof(MyFisrtProjectASPNETZERODbContext))]
-    partial class MyFisrtProjectASPNETZERODbContextModelSnapshot : ModelSnapshot
+    [Migration("20180711044044_Edit_Employee_Table")]
+    partial class Edit_Employee_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1020,7 +1022,7 @@ namespace MyFisrtProjectASPNETZERO.Migrations
                         .IsRequired()
                         .HasMaxLength(32);
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
