@@ -67,8 +67,7 @@ import { CreateEmployeeComponent } from './employee/create-employee/create-emplo
         EditTaskComponent,
         EmployeeComponent,
         EditEmployeeComponent,
-        CreateEmployeeComponent,
-        DatepickerOverviewExample
+        CreateEmployeeComponent
     ],
     imports: [
         CommonModule,
