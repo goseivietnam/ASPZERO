@@ -15,6 +15,8 @@ import { AbpModule } from '@abp/abp.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
 
+
+
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
 import { UsersComponent } from '@app/users/users.component';
@@ -36,6 +38,9 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
 import { TasksComponent } from './tasks/tasks.component';
 import { AddOrEditTaskModalComponent } from './tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
 import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { EditEmployeeComponent } from './employee/edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './employee/create-employee/create-employee.component';
 
 @NgModule({
     declarations: [
@@ -59,8 +64,11 @@ import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
         RightSideBarComponent,
         TasksComponent,
         AddOrEditTaskModalComponent,
-        EditTaskComponent
-    
+        EditTaskComponent,
+        EmployeeComponent,
+        EditEmployeeComponent,
+        CreateEmployeeComponent,
+        DatepickerOverviewExample
     ],
     imports: [
         CommonModule,
