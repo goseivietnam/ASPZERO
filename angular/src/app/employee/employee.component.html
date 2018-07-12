@@ -31,8 +31,8 @@
                     <tbody>
                         <tr *ngFor="let item of employees | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
                             <td>{{item.name}}</td>
-                            <td>{{item.birthday}}</td>
-                            <td>{{item.creationTime}}</td>
+                            <td>{{item.birthday|date:'dd/MM/yyyy'}}</td>
+                            <td>{{item.creationTime|date:'dd/MM/yyyy - H:mm:ss'}}</td>
                             <td class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">menu</i>
@@ -49,7 +49,7 @@
                 <div class="text-align: center;" *ngIf="totalItems > pageSize">
                     <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
                 </div>
-                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createUser()">
+                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="create()">
                     <i class="material-icons">add</i>
                 </button>
             </div>
@@ -58,3 +58,4 @@
 </div>
 
 <app-edit-employee #editEmployeeModal (modalSave)="refresh()"></app-edit-employee>
+<app-create-employee #createEmployeeModal (modalSave)="refresh()"></app-create-employee>

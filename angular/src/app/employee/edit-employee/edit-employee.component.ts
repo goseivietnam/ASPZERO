@@ -2,9 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Injecto
 import { EmployeeServiceProxy, EmployeeDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { ModalDirective } from 'ngx-bootstrap';
-import { moment } from 'ngx-bootstrap/chronos/test/chain';
-import { DatepickerOverviewExample } from '@shared/date-picker/datepicker.component';
 
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-employee',
@@ -14,15 +13,12 @@ import { DatepickerOverviewExample } from '@shared/date-picker/datepicker.compon
 export class EditEmployeeComponent extends AppComponentBase {
     @ViewChild('editEmployeeModal') modal: ModalDirective;
     @ViewChild('modalContent') modalContent: ElementRef;
-    @ViewChild('datePicker') datePicker: DatepickerOverviewExample; 
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
     active: boolean = false;
     saving: boolean = false;
-    test: string;
-    test1: Date;
-
+    test1;
     employee: EmployeeDto = null;
 
     constructor(
@@ -38,8 +34,7 @@ export class EditEmployeeComponent extends AppComponentBase {
             .subscribe(
                 (result) => {
                     this.employee = result;
-                    this.test = this.employee.birthday.toString();
-                    this.test1 = new Date(Date.now());
+                    this.test1 = this.employee.birthday.format('YYYY-MM-DD');
                     this.active = true;
                     this.modal.show();
                 }
@@ -48,7 +43,8 @@ export class EditEmployeeComponent extends AppComponentBase {
     }
     save(): void {
         this.saving = true;
-        this._employeeService.update(this.employee)
+        this.employee.birthday = moment(this.test1).add(7, 'hours');
+        this._employeeService.update(this.employee) 
             .finally(() => { this.saving = false; })
             .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));

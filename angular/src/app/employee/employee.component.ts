@@ -11,6 +11,7 @@ import { EditEmployeeComponent } from '@app/employee/edit-employee/edit-employee
 export class EmployeeComponent extends PagedListingComponentBase <EmployeeDto> {
 
     @ViewChild('editEmployeeModal') editEmployeeModal: EditEmployeeComponent;
+    @ViewChild('createEmployeeModal') createEmployeeModal: CreateEmployeeComponent;
 
     active: boolean = false;
     employees: EmployeeDto[] = [];
@@ -50,6 +51,10 @@ export class EmployeeComponent extends PagedListingComponentBase <EmployeeDto> {
 
     edit(employee: EmployeeDto) {
         this.editEmployeeModal.show(employee.id);
+    }
+
+    create() {
+        this.createEmployeeModal.show();
     }
 
 }

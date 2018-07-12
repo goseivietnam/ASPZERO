@@ -18,11 +18,6 @@ namespace MyFisrtProjectASPNETZERO.Employee
             _employeeRepository = employeeRepository;
         }
 
-        //public override async Task<ListResultDto<EmployeeDto>> GetAll()
-        //{
-        //    var listEmployee = await _employeeRepository.GetAllListAsync();
-        //    return new ListResultDto<EmployeeDto>(ObjectMapper.Map<List<EmployeeDto>>(listEmployee));
-        //}
 
     }
 }
