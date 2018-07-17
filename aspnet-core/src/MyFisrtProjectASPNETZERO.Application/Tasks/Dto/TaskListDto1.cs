@@ -5,13 +5,15 @@ using Abp.Domain.Entities.Auditing;
 
 namespace MyFisrtProjectASPNETZERO.Tasks.Dto
 {
-    [AutoMapFrom(typeof(Task))]
-    public class TaskListDto : EntityDto, IHasCreationTime
+
+    public class TaskListDto1
     {
+        public int Id { get; set; }
+        public int TenantId { get; set; }
         public DateTime CreationTime { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public TaskState State { get; set; }
-        public int? EmployeeId { get; set; }
+        public string Name { get; set; }
     }
 }

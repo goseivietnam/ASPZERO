@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MyFisrtProjectASPNETZERO.Employee.Configuration
+namespace MyFisrtProjectASPNETZERO.Employee1.Configuration
 {
     public class EmployeeEntityConfiguration
     {

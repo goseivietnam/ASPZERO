@@ -41,6 +41,7 @@ import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { EditEmployeeComponent } from './employee/edit-employee/edit-employee.component';
 import { CreateEmployeeComponent } from './employee/create-employee/create-employee.component';
+import { AssignTaskComponent } from './tasks/assign-task/assign-task.component';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import { CreateEmployeeComponent } from './employee/create-employee/create-emplo
         EditTaskComponent,
         EmployeeComponent,
         EditEmployeeComponent,
-        CreateEmployeeComponent
+        CreateEmployeeComponent,
+        AssignTaskComponent
     ],
     imports: [
         CommonModule,

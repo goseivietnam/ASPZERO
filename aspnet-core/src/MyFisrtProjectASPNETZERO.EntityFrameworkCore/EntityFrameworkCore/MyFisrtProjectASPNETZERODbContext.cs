@@ -5,6 +5,8 @@ using MyFisrtProjectASPNETZERO.Authorization.Users;
 using MyFisrtProjectASPNETZERO.MultiTenancy;
 using MyFisrtProjectASPNETZERO.Tasks.Configuration;
 using MyFisrtProjectASPNETZERO.Tasks;
+using MyFisrtProjectASPNETZERO.Employee1;
+using MyFisrtProjectASPNETZERO.Employee1.Configuration;
 
 namespace MyFisrtProjectASPNETZERO.EntityFrameworkCore
 {
@@ -12,7 +14,7 @@ namespace MyFisrtProjectASPNETZERO.EntityFrameworkCore
     {
         /* Define a DbSet for each entity of the application */
         public virtual DbSet<Task> Tasks { get; set; }
-        public virtual DbSet<MyFisrtProjectASPNETZERO.Employee.Employee> Employees { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
 
         public MyFisrtProjectASPNETZERODbContext(DbContextOptions<MyFisrtProjectASPNETZERODbContext> options)
             : base(options)
@@ -22,7 +24,9 @@ namespace MyFisrtProjectASPNETZERO.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
             TaskEntityConfiguration.Configure(modelBuilder.Entity<Task>());
-            MyFisrtProjectASPNETZERO.Employee.Configuration.EmployeeEntityConfiguration.Configure(modelBuilder.Entity<MyFisrtProjectASPNETZERO.Employee.Employee>());
+            EmployeeEntityConfiguration.Configure(modelBuilder.Entity<Employee>());
+
         }
+        
     }
 }

@@ -12,5 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyFisrtProjectASPNETZERO.Core\MyFisrtProjectASPNETZERO.Core.csproj" />
+    <ProjectReference Include="..\MyFisrtProjectASPNETZERO.EntityFrameworkCore\MyFisrtProjectASPNETZERO.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>

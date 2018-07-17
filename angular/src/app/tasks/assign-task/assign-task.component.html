@@ -1,0 +1,28 @@
+<div bsModal #assignTaskModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div #modalContent class="modal-content">
+            <form *ngIf="active" #assignTaskForm="ngForm" id="frm_edit_task" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>Select Employee</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="form-control" role="menu" style=" overflow-y: auto; min-height: 150px;margin-left: 0px !important; list-style: none;">
+                        <li *ngFor="let item of employees" data-original-index="0" class="" (click)="select(item)">
+                            <input name="group1" type="radio" id="{{item.id}}">
+                            <label for="{{item.id}}">{{item.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button [disabled]="!assignTaskForm.form.valid || saving" type="submit" class="btn btn-primary blue">{{l("Save")}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -13,10 +13,12 @@ namespace MyFisrtProjectASPNETZERO.Tasks
     public class TaskAppService : MyFisrtProjectASPNETZEROAppServiceBase, ITaskAppService
     {
         private readonly IRepository<Task> _taskRepository;
+        private readonly IRepository<MyFisrtProjectASPNETZERO.Employee1.Employee> _employeeRepository;
 
-        public TaskAppService(IRepository<Task> taskRepository)
+        public TaskAppService(IRepository<Task> taskRepository, IRepository<MyFisrtProjectASPNETZERO.Employee1.Employee> employeeRepository)
         {
             _taskRepository = taskRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTasksInput input)
@@ -30,6 +32,21 @@ namespace MyFisrtProjectASPNETZERO.Tasks
 
             var dtos = ObjectMapper.Map<List<TaskListDto>>(tasks);
             return await System.Threading.Tasks.Task.FromResult(new ListResultDto<TaskListDto>(dtos));
+        }
+
+        public List<TaskListDto1> GetAll1()
+        {
+            var tasks =  _taskRepository.GetAll();
+            var employees = _employeeRepository.GetAll();
+            var result = (from t in tasks
+                          join e in  employees
+                          on t.EmployeeId equals e.Id into a
+                          from e in a.DefaultIfEmpty()
+                          select new{t.Id,t.TenantId,t.CreationTime,t.Title,t.Description,t.State,e.Name }).ToList();
+
+
+            var dtos = ObjectMapper.Map<List<TaskListDto1>>(result);
+            return dtos;
         }
 
         public async Task<TaskListDto> Create(CreateTaskInput input)

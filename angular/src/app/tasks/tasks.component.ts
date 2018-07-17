@@ -3,14 +3,16 @@ import { TaskListDto, TaskState, TaskServiceProxy } from '@shared/service-proxie
 import { AppComponentBase } from '@shared/app-component-base';
 import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
 import { EditTaskComponent } from '@app/tasks/edit-task/edit-task.component';
+import { AssignTaskComponent } from '@app/tasks/assign-task/assign-task.component';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+    styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent extends AppComponentBase implements OnInit {
     @ViewChild('addOrEditTaskModal') addOrEditTaskModal: AddOrEditTaskModalComponent;
     @ViewChild('editTaskModal') editTaskModal: EditTaskComponent;
+    @ViewChild('assignTaskModal') assignTaskModal: AssignTaskComponent;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     tasks: TaskListDto[] = [];
     selectedState: TaskState;
@@ -55,6 +57,9 @@ export class TasksComponent extends AppComponentBase implements OnInit {
 
     editTask(task: TaskListDto): void {
         this.editTaskModal.show(task.id);
+    }
+    AssignTask(item: TaskListDto): void {
+        this.assignTaskModal.show(item);
     }
     protected delete(id: number): void {
         abp.message.confirm(
