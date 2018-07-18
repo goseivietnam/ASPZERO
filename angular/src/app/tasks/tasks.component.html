@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of tasks | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
+                            <tr *ngFor="let item of tasks1 | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
                                 <td (click)="editTask(item)" style="cursor:pointer;">{{item.title}}</td>
                                 <td>{{item.creationTime?.format('LLL')}}</td>
                                 <td>{{getTaskState(item)}}</td>
@@ -42,9 +42,10 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    <div class="form-line">
+                                    <div class="form-line"  [ngStyle]="setStyle(item)">
                                         <a href="javascript:void(0);" class="waves-effect waves-block" (click)="AssignTask(item)"><i class="material-icons">assignment_ind</i></a>
                                     </div>
+                                    {{item.name==null?"":item.name}}
                                 </td>
                             </tr>
                         </tbody>

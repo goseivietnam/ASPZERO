@@ -1,9 +1,10 @@
 import { Component, OnInit, Injector, ViewChild, Output, EventEmitter } from '@angular/core';
-import { TaskListDto, TaskState, TaskServiceProxy } from '@shared/service-proxies/service-proxies';
+import { TaskListDto, TaskState, TaskServiceProxy, TaskListDto1, TaskListDtoState } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AddOrEditTaskModalComponent } from '@app/tasks/add-or-edit-task-modal/add-or-edit-task-modal.component';
 import { EditTaskComponent } from '@app/tasks/edit-task/edit-task.component';
 import { AssignTaskComponent } from '@app/tasks/assign-task/assign-task.component';
+import * as moment from 'moment';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -15,6 +16,7 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     @ViewChild('assignTaskModal') assignTaskModal: AssignTaskComponent;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     tasks: TaskListDto[] = [];
+    tasks1: TaskListDto1[] = [];
     selectedState: TaskState;
     stateSelectOptions = [
         { text: this.l('AllTasks'), value: undefined },
@@ -30,14 +32,15 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     }
 
     getTasks() {
-        this.taskService.getAll(this.selectedState as any).subscribe(result => { this.tasks = result.items });
+        this.taskService.getAll1().subscribe(result => { this.tasks1 = result; });
+        this.taskService.getAll(this.selectedState as any).subscribe(result => { this.tasks = result.items;});
     }
 
     getTaskLable(task: TaskListDto) {
         return task.state === TaskState1.Open ? 'lable-success' : 'lable-default';
     }
 
-    getTaskState(task: TaskListDto) {
+    getTaskState(task: TaskListDto1) {
         switch (task.state) {
             case TaskState1.Open:
                 return this.l('Open');
@@ -75,8 +78,33 @@ export class TasksComponent extends AppComponentBase implements OnInit {
             }
         );
     }
+
+
+    setStyle(item: model) {
+        if (item.name == null) {
+            let style = {
+                'display':'block'
+            }
+            return style
+        }
+        else{
+            let style = {
+                'display':'none'
+            }
+            return style
+        }
+       
+    }
 }
 export class TaskState1 {
     static Open: number = 0;
     static Completed: number = 1;
+}
+export class model {
+    creationTime: moment.Moment | undefined;
+    title: string | undefined;
+    description: string | undefined;
+    state: TaskListDtoState | undefined;
+    name: string | undefined;
+    id: number | undefined;
 }
