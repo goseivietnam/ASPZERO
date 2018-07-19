@@ -54,22 +54,34 @@ export class EmployeeComponent extends PagedListingComponentBase <EmployeeDto> {
     }
 
     deletemulti() {
-        abp.message.confirm(
-            "Delete employees checked!",
-            (result: boolean) => {
-                if (result) {
-                    for (let item of this.employees) {
-                        if ($("#" + item.id)[0].checked) {
-                            this._employeeService.delete(item.id).subscribe(() => {
-                                abp.notify.info("Deleted Employee: " + item.name);
+        var x = 0;
+        for (let item of this.employees) {
+            if ($("#" + item.id)[0].checked) {
+                x = 1;
+            }
+        }
+        if (x == 1) {
+            abp.message.confirm(
+                "Delete employees checked!",
+                (result: boolean) => {
+                    if (result) {
+                        for (let item of this.employees) {
+                            if ($("#" + item.id)[0].checked) {
+                                this._employeeService.delete(item.id).subscribe(() => {
+                                    abp.notify.info("Deleted Employee: " + item.name);
 
-                            });
+                                });
+                            }
                         }
-                    }
-                    this.refresh();
-                };
+                        this.refresh();
+                    };
                 }
-        );
+            );
+        }
+        else{
+            abp.notify.error("No Employee Selected!");
+        }
+       
     }
     //Show Modals
 
