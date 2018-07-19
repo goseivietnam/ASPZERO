@@ -272,6 +272,62 @@ export class EmployeeServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getAll2(): Observable<EmployeeDto1[]> {
+        let url_ = this.baseUrl + "/api/services/app/Employee/GetAll2";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll2(<any>response_);
+                } catch (e) {
+                    return <Observable<EmployeeDto1[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<EmployeeDto1[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll2(response: HttpResponseBase): Observable<EmployeeDto1[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EmployeeDto1.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<EmployeeDto1[]>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -2640,6 +2696,69 @@ export interface IEmployeeDto {
     birthday: moment.Moment | undefined;
     creationTime: moment.Moment | undefined;
     id: number | undefined;
+}
+
+export class EmployeeDto1 implements IEmployeeDto1 {
+    id: number | undefined;
+    name: string | undefined;
+    birthday: moment.Moment | undefined;
+    creationTime: moment.Moment | undefined;
+    pendingTask: number | undefined;
+    completedTask: number | undefined;
+
+    constructor(data?: IEmployeeDto1) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.birthday = data["birthday"] ? moment(data["birthday"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.pendingTask = data["pendingTask"];
+            this.completedTask = data["completedTask"];
+        }
+    }
+
+    static fromJS(data: any): EmployeeDto1 {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmployeeDto1();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["birthday"] = this.birthday ? this.birthday.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["pendingTask"] = this.pendingTask;
+        data["completedTask"] = this.completedTask;
+        return data; 
+    }
+
+    clone(): EmployeeDto1 {
+        const json = this.toJSON();
+        let result = new EmployeeDto1();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEmployeeDto1 {
+    id: number | undefined;
+    name: string | undefined;
+    birthday: moment.Moment | undefined;
+    creationTime: moment.Moment | undefined;
+    pendingTask: number | undefined;
+    completedTask: number | undefined;
 }
 
 export class PagedResultDtoOfEmployeeDto implements IPagedResultDtoOfEmployeeDto {

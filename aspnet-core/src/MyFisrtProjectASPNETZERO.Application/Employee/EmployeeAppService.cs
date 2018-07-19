@@ -13,9 +13,11 @@ namespace MyFisrtProjectASPNETZERO.Employee
     {
 
         private readonly IRepository<MyFisrtProjectASPNETZERO.Employee1.Employee> _employeeRepository;
-        public EmployeeAppService(IRepository<MyFisrtProjectASPNETZERO.Employee1.Employee> employeeRepository) :base(employeeRepository)
+        private readonly IRepository<MyFisrtProjectASPNETZERO.Tasks.Task> _taskRepository;
+        public EmployeeAppService(IRepository<MyFisrtProjectASPNETZERO.Employee1.Employee> employeeRepository, IRepository<MyFisrtProjectASPNETZERO.Tasks.Task> taskRepository) : base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
+            _taskRepository = taskRepository;
         }
 
 
@@ -30,5 +32,27 @@ namespace MyFisrtProjectASPNETZERO.Employee
             var dtos = ObjectMapper.Map<List<EmployeeDto>>(employees);
             return await System.Threading.Tasks.Task.FromResult(new ListResultDto<EmployeeDto>(dtos));
         }
+
+        public List<EmployeeDto1> GetAll2()
+        {
+            var tasks = _taskRepository.GetAll();
+            var employees = _employeeRepository.GetAll();
+            var result = (from e in employees
+                          select new
+                          {
+                              e.Id,
+                              e.CreationTime,
+                              e.Name,
+                              e.Birthday,
+                              PendingTask= (from t in tasks where t.EmployeeId==e.Id && t.State==0 select t).Count(),
+                              CompletedTask= (from t in tasks where t.EmployeeId == e.Id && t.State == Tasks.TaskState.Completed select t).Count()
+                          }
+                          ).ToList();
+
+
+                var dtos = ObjectMapper.Map<List<EmployeeDto1>>(result);
+            return dtos;
+        }
+
     }
 }

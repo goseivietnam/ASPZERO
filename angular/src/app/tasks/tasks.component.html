@@ -21,13 +21,13 @@
                             <tr>
                                 <th>{{l('Title')}}</th>
                                 <th>{{l('CreationTime')}}</th>
-                                <th>{{l('Task State')}}</th>
-                                <th>Actions</th>
+                                <th>{{l('State')}}</th>
+                                <th>Action</th>
                                 <th>Assign</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of tasks1 | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
+                            <tr *ngFor="let item of tasks1">
                                 <td (click)="editTask(item)" style="cursor:pointer;">{{item.title}}</td>
                                 <td>{{item.creationTime?.format('LLL')}}</td>
                                 <td>{{getTaskState(item)}}</td>

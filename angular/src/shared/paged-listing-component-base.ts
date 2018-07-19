@@ -1,5 +1,6 @@
-﻿import { AppComponentBase } from "shared/app-component-base";
+import { AppComponentBase } from "shared/app-component-base";
 import { Injector, OnInit } from '@angular/core';
+import { EmployeeDto1 } from "@shared/service-proxies/service-proxies";
 
 export class PagedResultDto {
     items: any[];
@@ -39,6 +40,13 @@ export abstract class PagedListingComponentBase<EntityDto> extends AppComponentB
         this.totalPages = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
 
         this.totalItems = result.totalCount;
+        this.pageNumber = pageNumber;
+    }
+
+    public showPaging1(result: EmployeeDto1[], pageNumber: number): void {
+        this.totalPages = ((result.length - (result.length % this.pageSize)) / this.pageSize) + 1;
+
+        this.totalItems = result.length;
         this.pageNumber = pageNumber;
     }
 

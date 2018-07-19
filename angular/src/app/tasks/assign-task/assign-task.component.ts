@@ -13,7 +13,7 @@ export class AssignTaskComponent extends AppComponentBase {
     @ViewChild('assignTaskModal') assignTaskModal: ModalDirective;
     @ViewChild('modalContent') modalContent: ElementRef;
 
-    employees: EmployeeDto[] = [];
+    employees: EmployeeDto1[] = [];
     selectedEmployee: EmployeeDto = null;
     selectedTask: TaskListDto = new TaskListDto();
 
@@ -28,7 +28,7 @@ export class AssignTaskComponent extends AppComponentBase {
     }
 
     getEmployees() {
-        this._employeeService.getAll(0, 10).subscribe(result => { this.employees = result.items });
+        this._employeeService.getAll2().subscribe(result => { this.employees = result });
     }
     show(item: TaskListDto): void {
         this.selectedTask.id = item.id;
